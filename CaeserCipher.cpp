@@ -1,5 +1,5 @@
 #include <iostream>
-#include <cstring>
+#include <string>
 using namespace std;
 
 void cls();
@@ -11,7 +11,7 @@ string Decrypt(string cipherText, int key);
 
 int main() {
 
-    string cleanText = "" , cipherText = "";
+    string cleanText  , cipherText ;
     int i , key;
     char op;
 
@@ -21,11 +21,13 @@ int main() {
     cout << "-3- Exit" << endl;
     cout << "Choose one of them: ";
     cin >> op;
+    cin.get();
+
 
     switch (op) {
     case '1':
         cout << "Enter The Text You Want To Encrypt: ";
-        cin >> cleanText;
+        getline(cin , cleanText);
 
         cout << "Enter The Key: ";
         cin >> key;
@@ -88,8 +90,12 @@ string Encrypt(string cleanText, int key) {
 
     for (int i = 0; i < cleanText.length(); i++) {
 
-        if (isUpper(cleanText[i]))
+        if (cleanText[i] == ' ')
+            cipherText += '-';
+
+        else if (isUpper(cleanText[i]))
             cipherText += char(int(cleanText[i] + key - 65)% 26 + 65);
+
         else
             cipherText += char(int(cleanText[i] + key - 97)% 26 + 97);
     }
@@ -102,7 +108,10 @@ string Decrypt(string cipherText, int key) {
 
     for (int i = 0; i < cipherText.length(); i++) {
 
-      if (isUpper(cipherText[i]))
+      if (cipherText[i] == '-')
+          cleanText += ' ';
+
+      else if (isUpper(cipherText[i]))
           cleanText += char(int(cipherText[i] - key - 65)% 26 + 65);
       else
           cleanText += char(int(cipherText[i] - key - 97)% 26 + 97);
